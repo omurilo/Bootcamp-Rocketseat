@@ -6,7 +6,7 @@ class UserController {
   }
 
   async store (req, res) {
-    const { filename: avatar } = req.file
+    const { filename: avatar } = req.file ? req.file : ''
     await User.create({ ...req.body, avatar })
     return res.redirect('/')
   }
