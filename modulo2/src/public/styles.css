@@ -130,6 +130,17 @@ body {
   color: #666;
 }
 
+.main-wrapper .container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: calc(100% - 30px);
+  background: #fff;
+  border-radius: 4px;
+  padding: 30px 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
 .main-wrapper .content {
   display: flex;
   flex-direction: column;
@@ -141,7 +152,17 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.main-wrapper .content > strong {
+.main-wrapper .big-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 30px 20px;
+}
+
+.main-wrapper .content > strong,
+.container > strong, .big-content > strong {
   display: block;
   text-align: center;
   font-size: 21px;
@@ -149,13 +170,18 @@ body {
   margin-bottom: 20px;
 }
 
-.main-wrapper .content a.logout {
+.main-wrapper a.logout {
   background: #de6d6d;
   text-decoration: none;
   height: 40px;
+  right: 0;
+  width: 60px;
+  margin: 5px 15px;
+  top: 0;
   display: flex;
-  justify-content: center;
+  position: absolute;
   align-items: center;
+  justify-content: center;
   border-radius: 4px;
   font-weight: bold;
   font-size: 14px;
@@ -208,6 +234,7 @@ ul.providers {
 .provider img {
   width: 48px;
   height: 48px;
+  min-width: 48px;
   border-radius: 50%;
 }
 

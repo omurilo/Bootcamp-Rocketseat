@@ -1,22 +1,51 @@
 {% extends '_layouts/default.njk' %}
 
 {% block body %}
-<div class="content">
-  <strong>Olá, {{ user.name }}</strong>
-  <p>Inicie um agendamento escolhendo um profissional abaixo:</p>
-
-  <ul class="providers">
-    {% for provider in providers %}
-      <li class="provider">
-        <div>
-          <img src="/files/{{ provider.avatar }}" alt={{ provider.name }} />
-          <strong>{{ provider.name }}</strong>
+  {% if user.provider === false %}
+    <div class="container">
+        <div class="content">
+          <strong>Olá, {{ user.name }}</strong>
+            <p>Veja seus próximos agendamentos:</p>
+            <ul class="providers">
+                {% if appointmentsUser.length > 0 %}
+                  {% for appointment in appointmentsUser %}
+                    <li class="provider">
+                      <div>
+                        <img src="/files/{{ appointment.avatar }}" alt={{ appointment.provider }} />
+                        <strong>Você possui um agendamento com {{ appointment.provider }} em {{ appointment.date }} ás
+                        {{ appointment.hour }}</strong>
+                      </div>
+                    </li>
+                  {% endfor %}
+                {% else %}
+                  <li class="provider">
+                      <strong>Você ainda não possui agendamentos!</strong>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
-        <a href="/app/appointments/new/{{ provider.id }}">+</a>
-      </li>
-    {% endfor %}
-  </ul>
-
+        <div class="content">
+          <p>Inicie um agendamento escolhendo um profissional abaixo:</p>
+          <ul class="providers">
+            {% for provider in providers %}
+              <li class="provider">
+                <div>
+                  <img src="/files/{{ provider.avatar }}" alt={{ provider.name }} />
+                  <strong>{{ provider.name }}</strong>
+                </div>
+                <a href="/app/appointments/new/{{ provider.id }}">+</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+    </div>
+  {% else %}
+    <div class="container">
+      <div class="big-content">
+        <strong>Olá, {{ user.name }}</strong>
+        Você é um provedor de serviços!
+      </div>
+    </div>
+  {% endif %}
   <a href="/app/logout" class="logout">Sair</a>
-</div>
 {% endblock %}
