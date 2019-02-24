@@ -162,7 +162,8 @@ body {
 }
 
 .main-wrapper .content > strong,
-.container > strong, .big-content > strong {
+.container > strong,
+.big-content > strong {
   display: block;
   text-align: center;
   font-size: 21px;
@@ -170,14 +171,13 @@ body {
   margin-bottom: 20px;
 }
 
-.main-wrapper a.logout {
+.main-wrapper a.logout,
+a.schedules {
   background: #de6d6d;
   text-decoration: none;
   height: 40px;
-  right: 0;
-  width: 60px;
   margin: 5px 15px;
-  top: 0;
+  padding: 15px;
   display: flex;
   position: absolute;
   align-items: center;
@@ -189,7 +189,18 @@ body {
   color: #fff;
 }
 
-.main-wrapper .content a.logout:hover {
+.main-wrapper a.logout {
+  right: 0;
+  top: 0;
+}
+
+.main-wrapper .content a.schedules {
+  left: 0;
+  top: 0;
+}
+
+.main-wrapper a.logout:hover,
+.content a.schedules:hover {
   background: #c15858;
 }
 
