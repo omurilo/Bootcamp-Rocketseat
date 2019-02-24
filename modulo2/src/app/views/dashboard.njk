@@ -9,13 +9,13 @@
             {% endif %}
             <p>Veja seus próximos agendamentos:</p>
             <ul class="providers">
-                {% if appointmentsUser.length > 0 %}
-                  {% for appointment in appointmentsUser %}
+                {% if appointments.length > 0 %}
+                  {% for appointment in appointments %}
                     <li class="provider">
                       <div>
-                        <img src="/files/{{ appointment.avatar }}" alt={{ appointment.provider }} />
-                        <strong>Você possui um agendamento com {{ appointment.provider }} em {{ appointment.date }} ás
-                        {{ appointment.hour }}</strong>
+                        <img src="/files/{{ appointment.provider.avatar }}" alt="{{ appointment.provider.name }}" />
+                        <strong>Você possui um agendamento com {{ appointment.provider.name }} em {{ appointment.date | date("DD/MM")  }} ás
+                        {{ appointment.date | date("HH:mm") }}</strong>
                       </div>
                     </li>
                   {% endfor %}

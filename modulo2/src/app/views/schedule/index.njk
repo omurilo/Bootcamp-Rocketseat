@@ -7,12 +7,12 @@
         <ul class="providers">
           {% if appointments.length > 0 %}
             {% for appointment in appointments %}
-              {% if appointment.user.id !== user.id %}
+              {% if appointment.user.id !== user.id and appointment.provider_id === user.id %}
                 <li class="provider">
                   <div>
                     <img src="/files/{{ appointment.user.avatar }}" alt={{ appointment.user.name }} />
-                    <strong>Você possui um agendamento com {{ appointment.user.name }} ás {{ appointment.date | date("HH:mm") }}
-                    </strong>
+                    <strong>Você possui um agendamento com {{ appointment.user.name }} em {{ appointment.date | date("DD/MM")  }} ás
+                        {{ appointment.date | date("HH:mm") }}</strong>
                   </div>
                 </li>
               {% endif %}
