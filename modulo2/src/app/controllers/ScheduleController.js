@@ -7,7 +7,7 @@ class ScheduleController {
     const appointments = await Appointment.findAll({
       include: [{ model: User, as: 'user' }],
       where: {
-        date: {
+        /* date: {
           [Op.between]: [
             moment()
               .startOf('day')
@@ -16,6 +16,13 @@ class ScheduleController {
             moment()
               .endOf('day')
               .utc()
+              .format()
+          ]
+        } */
+        date: {
+          [Op.gte]: [
+            moment()
+              .startOf('day')
               .format()
           ]
         }
