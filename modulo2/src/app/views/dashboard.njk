@@ -43,7 +43,23 @@
     <div class="container">
       <div class="big-content">
         <strong>Olá, {{ user.name }}</strong>
-        Você é um provedor de serviços!
+          <ul class="providers">
+            {% if appointmentsProvider.length > 0 %}
+              {% for appointment in appointmentsProvider %}
+                <li class="provider">
+                  <div>
+                    <img src="/files/{{ appointment.avatar }}" alt={{ appointment.user }} />
+                    <strong>Você possui um agendamento com {{ appointment.user }} em {{ appointment.date }} ás
+                    {{ appointment.hour }}</strong>
+                  </div>
+                </li>
+              {% endfor %}
+            {% else %}
+              <li class="provider">
+                  <strong>Você ainda não possui agendamentos!</strong>
+                </li>
+            {% endif %}
+          </ul>
       </div>
     </div>
   {% endif %}
