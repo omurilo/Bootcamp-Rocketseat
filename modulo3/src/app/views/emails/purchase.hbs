@@ -1,0 +1,20 @@
+<html>
+
+<head>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <strong>Ola, {{ ad.author.name  }}.</strong>
+  <p>O seu anúncio {{ ad.title  }} teve uma intenção de compra de {{ user.name }}, para finalizarem esta transação
+    sugerimos que você entre em contanto com o comprador atraves do e-mail <strong>{{ user.email }}</strong>.</p>
+  <strong>O comprador deixou uma mensagem: {{ content }}</strong>
+  <p>Agradecemos por utilizar nossa plataforma.</p>
+  <p>Att. GoNode03 MarketPlace.</p>
+</body>
+
+</html>
