@@ -1,5 +1,0 @@
-node_modules
-
-tmp/*
-!tmp/sessions/.gitkeep
-!tmp/uploads/.gitkeep
