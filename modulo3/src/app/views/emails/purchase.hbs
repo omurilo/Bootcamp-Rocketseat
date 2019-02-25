@@ -13,6 +13,9 @@
   <p>O seu anúncio {{ ad.title  }} teve uma intenção de compra de {{ user.name }}, para finalizarem esta transação
     sugerimos que você entre em contanto com o comprador atraves do e-mail <strong>{{ user.email }}</strong>.</p>
   <strong>O comprador deixou uma mensagem: {{ content }}</strong>
+  <p>Este é o id da compra <strong>{{ purchase._id }}</strong>, para aceitá-la basta enviar uma solicitação PUT para:
+  </p>
+  <p>http://localhost:3000/purchase/{{purchase._id}} com os parâmetros: { "ad": "{{ ad._id }}", "accept": true }.</p>
   <p>Agradecemos por utilizar nossa plataforma.</p>
   <p>Att. GoNode03 MarketPlace.</p>
 </body>

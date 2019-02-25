@@ -20,10 +20,15 @@ class AdController {
       filters.title = new RegExp(req.query.title, 'i')
     }
 
+    filters.purchasedBy = null
+
     const ads = await Ad.paginate(filters, {
       page: req.query.page || 1,
-      limit: 3,
-      populate: { path: 'author', select: ['name', 'email'] },
+      limit: 20,
+      populate: [
+        { path: 'author', select: ['name', 'email'] },
+        { path: 'purchasedBy', select: ['ad', 'buyer'] }
+      ],
       sort: '-created_At'
     })
 
@@ -31,7 +36,16 @@ class AdController {
   }
 
   async show (req, res) {
-    const ad = await Ad.findById(req.params.id)
+    const ad = await Ad.findOne({ _id: req.params.id })
+
+    if (ad.purchasedBy) {
+      return res
+        .status(401)
+        .json({
+          error:
+            'This ad was already purchased and can not be shown for as long as possible.'
+        })
+    }
 
     return res.json(ad)
   }
