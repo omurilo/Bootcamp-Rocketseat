@@ -1,6 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { render } from "react-dom";
+
 import Button from "./components/Button";
+
+import "./style.scss";
+import { red } from "ansi-colors";
 
 class App extends Component {
   state = {
@@ -35,8 +39,10 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <h1>Hello RocketSeat</h1>
-        <h2>o valor da soma é: {this.state.counter}</h2>
+        <h1 className="title">Hello RocketSeat</h1>
+        <h2 style={{ color: "#f00" }}>
+          o valor da soma é: {this.state.counter}
+        </h2>
         <Button onClick={this.handleClick}>Somar</Button>
       </Fragment>
     );
