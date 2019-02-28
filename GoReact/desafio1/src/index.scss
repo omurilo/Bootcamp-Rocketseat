@@ -1,0 +1,91 @@
+$DarkGray: rgb(59, 57, 57);
+$Gray: #969494;
+$LightGray: #bebdbd;
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", "San Francisco", "Roboto", Geneva, Verdana,
+    sans-serif;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: #ced5da;
+}
+
+header {
+  width: 100vw;
+  height: 50px;
+  background-color: #4267b2;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    color: #fff;
+    font-size: 1.2em;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% / 12 * 6);
+}
+.posts hr {
+  background-color: $Gray;
+  margin-bottom: 20px;
+}
+
+.post {
+  padding: 30px;
+  margin: 15px;
+  background-color: #fff;
+  box-shadow: 0 0 2px 0px rgba(0, 0, 0, 0.3);
+  color: $DarkGray;
+  border-radius: 2px;
+}
+
+.post p {
+  margin: 20px 0;
+}
+
+.headerPost {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: thin solid #dcd9d9;
+}
+
+.headerPost img {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  object-position: 50% 0%;
+  margin: 0 10px 0 0;
+}
+
+.headerPost .text span {
+  font-size: 1em;
+  font-weight: bold;
+  color: $Gray;
+  display: block;
+}
+
+.headerPost .text small {
+  display: block;
+  color: $LightGray;
+}
