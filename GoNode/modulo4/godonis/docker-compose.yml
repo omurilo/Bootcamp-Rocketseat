@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+  postgres:
+    image: kartoza/postgis
+    ports:
+      - 5432:5432
+    environment:
+      - ALLOW_IP_RANGE=0.0.0.0/0
+  app:
+    build: .
+    env_file: .env
+    command: "npm start"
+    environment:
+      - MAIL_HOST=mailhog
+      - PG_HOST=postgres
+    volumes:
+      - .:/godonis
+    depends_on:
+      - postgres
+    ports:
+      - 3333:3333
