@@ -16,12 +16,33 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.post('user', 'UserController.store')
+Route.post('user', 'UserController.store').validator('User')
 
-Route.post('sessions', 'SessionController.store')
+Route.post('sessions', 'SessionController.store').validator('Session')
 
-Route.post('forgot-password', 'ForgotPasswordController.store')
-Route.put('forgot-password', 'ForgotPasswordController.update')
+Route.post('forgot-password', 'ForgotPasswordController.store').validator('ForgotPassword')
+Route.put('forgot-password', 'ForgotPasswordController.update').validator('ResetPassword')
 
 Route.get('file/:id', 'FileController.show')
-Route.post('file', 'FileController.store')
+
+Route.group(() => {
+  Route.post('file', 'FileController.store')
+
+  Route.resource('projects', 'ProjectController')
+    .apiOnly()
+    .validator(
+      new Map([
+        [['projects.store'], ['ProjectStore']],
+        [['projects.update'], ['ProjectUpdate']]
+      ])
+    )
+
+  Route.resource('project.tasks', 'TaskController')
+    .apiOnly()
+    .validator(
+      new Map([
+        [['project.tasks.store'], ['TaskStore']],
+        [['project.tasks.update'], ['TaskUpdate']]
+      ])
+    )
+}).middleware(['auth'])

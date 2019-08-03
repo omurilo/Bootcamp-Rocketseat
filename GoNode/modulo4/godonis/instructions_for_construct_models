@@ -1,0 +1,58 @@
+Models Construct:
+  - User
+    - username
+      - notNullable
+      - unique
+    - email
+      - notNullable
+      - unique
+    - password
+      - notNullable
+    - token
+    - timestamp token_created_at
+  - Token
+    - userId
+      - unsigned
+      - references id
+      - inTable users
+    - token
+      - notNullable
+      - unique
+      - index
+    - type
+      - notNullable
+    - is_revoked
+      defaultTo false
+  - File
+    - file
+      - notNullable
+    - name
+      - notNullable
+    - type
+    - subtype
+  - Project
+    - userId (relacionamento com users)
+      - integer
+      - unsigned
+      - inTable users
+      - references
+      - onUpdate: cascade
+      - onDelete: set null
+    - title
+      - notNullable
+    - description
+      -notNullable
+  - Task
+    - userId
+      - ...Project (userId)
+    - projectId
+      - ...userId
+      - inTable projects
+      - onDelete cascade
+    - title
+      - notNullable
+    - description
+    - timestamp due_date
+    - fileId
+      - ...userId
+        - inTable files
