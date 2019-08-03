@@ -1,7 +1,9 @@
 'use strict'
 
 const User = use('App/Models/User')
-const Mail = use('Mail')
+const Kue = use('Kue')
+const forgottenJob = use('App/Jobs/ForgottenPasswordMail')
+const resetJob = use('App/Jobs/ResetPasswordMail')
 const crypto = require('crypto')
 const subDays = require('date-fns/sub_days')
 const isAfter = require('date-fns/is_after')
@@ -18,21 +20,13 @@ class ForgotPasswordController {
 
       await user.save()
 
-      await Mail.send(
-        ['emails.forgot_password'],
+      Kue.dispatch(forgottenJob.key,
         {
           token: user.token,
           email: user.email,
           name: user.username,
           link: `${request.input('redirect_url')}?token=${user.token}`
-        },
-        message => {
-          message
-            .to(user.email)
-            .from('suporte@user.com', 'Murilo Henrique')
-            .subject('Recuperação de senha')
-        }
-      )
+        }, { attempts: 3 })
 
       return {
         message: 'Recuperação de senha solicitada com sucesso!'
@@ -70,19 +64,11 @@ class ForgotPasswordController {
 
       await user.save()
 
-      await Mail.send(
-        ['emails.reset_password'],
+      Kue.dispatch(resetJob.key,
         {
           email: user.email,
           name: user.username
-        },
-        message => {
-          message
-            .to(user.email)
-            .from('suporte@user.com', 'Murilo Henrique')
-            .subject('Alteração de senha')
-        }
-      )
+        }, { attempts: 3 })
 
       return {
         message:

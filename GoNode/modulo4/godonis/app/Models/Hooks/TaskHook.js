@@ -1,12 +1,8 @@
 'use strict'
 
 const TaskHook = exports = module.exports = {}
-const Mail = use('Mail')
-const Helpers = use('Helpers')
-
-// create not set user => undefined undefined
-// update with not user setted => number undefined
-// update with user setted => number number
+const Kue = use('Kue')
+const Job = use('App/Jobs/TaskAddedUser')
 
 TaskHook.sendNewTaskMail = async (taskInstance) => {
   if ((!taskInstance.user_id && !taskInstance.dirty.user_id) ||
@@ -17,24 +13,9 @@ TaskHook.sendNewTaskMail = async (taskInstance) => {
 
   const { title } = taskInstance
 
-  await Mail.send(
-    ['emails.task_added_user'],
+  Kue.dispatch(Job.key,
+    { email, username, file, title },
     {
-      name: username,
-      title,
-      hasAttachment: !!file
-    },
-    message => {
-      message
-        .to(email)
-        .from('suporte@user.com', 'Murilo Henrique')
-        .subject('Uma tarefa foi vinculada à você')
-
-      if (file) {
-        message.attach(Helpers.tmpPath(`uploads/${file.file}`), {
-          filename: file.name
-        })
-      }
-    }
-  )
+      attempts: 3
+    })
 }

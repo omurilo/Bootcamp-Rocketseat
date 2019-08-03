@@ -20,7 +20,8 @@ const providers = [
   '@adonisjs/framework/providers/ViewProvider',
   '@adonisjs/redis/providers/RedisProvider',
   '@adonisjs/validator/providers/ValidatorProvider',
-  '@adonisjs/antl/providers/AntlProvider'
+  '@adonisjs/antl/providers/AntlProvider',
+  'adonis-kue/providers/KueProvider'
 ]
 
 /*
@@ -32,7 +33,10 @@ const providers = [
 | Providers for migrations, tests etc.
 |
 */
-const aceProviders = ['@adonisjs/lucid/providers/MigrationsProvider']
+const aceProviders = [
+  '@adonisjs/lucid/providers/MigrationsProvider',
+  'adonis-kue/providers/CommandsProvider'
+]
 
 /*
 |--------------------------------------------------------------------------
@@ -58,4 +62,18 @@ const aliases = {}
 */
 const commands = []
 
-module.exports = { providers, aceProviders, aliases, commands }
+/*
+|--------------------------------------------------------------------------
+| Commands
+|--------------------------------------------------------------------------
+|
+| Here you store your kue jobs
+|
+*/
+const jobs = [
+  'App/Jobs/ForgottenPasswordMail',
+  'App/Jobs/ResetPasswordMail',
+  'App/Jobs/TaskAddedUser'
+]
+
+module.exports = { providers, aceProviders, aliases, commands, jobs }
