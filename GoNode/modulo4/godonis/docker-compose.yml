@@ -1,41 +1,59 @@
 version: "3"
 
 services:
-  # mailhog:
-  #   image: mailhog/mailhog
-  #   ports:
-  #     - 1025:1025
-  #     - 8025:8025
   postgres:
     image: kartoza/postgis
+    container_name: "godonis_pg"
     ports:
       - 5432:5432
     environment:
       - ALLOW_IP_RANGE=0.0.0.0/0
+    volumes:
+      - ./docker/data/pg:/var/lib/postgresql
+      - ./docker/setup/pg:/home/setup
+
+  dbbackup:
+    image: kartoza/pg-backup:9.4
+    hostname: pg-backups
+    volumes:
+      - ./docker/backups:/backups
+    links:
+      - postgres:postgres
+    environment:
+      - DUMPPREFIX=PG_
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DBNAME=adonis
+
   redis:
     image: redis:alpine
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 2
-        delay: 10s
-      restart_policy:
-        condition: on-failure
+    container_name: "godonis_redis"
+    volumes:
+      - ./docker/data/redis:/data
     ports:
       - 6379:6379
-      - 6380:6380
+
   app:
+    container_name: "godonis_app"
     build: .
     env_file: .env
-    # adonis kue:listen and adonis migration:run
-    command: "npm start"
     environment:
-      # - MAIL_HOST=mailhog
-      - PG_HOST=postgres
+      - DB_HOST=postgres
     depends_on:
       - postgres
       - redis
     volumes:
-      - .:/
+      - .:/app
     ports:
-      - 3333:3333
+      - ${PORT}:${PORT}
+    command: sh -c ${DOCKER_APP_COMMAND}
+
+  kue:
+    container_name: "godonis_kue"
+    image: omurilo/adonis-kue:1.0.0
+    restart: always
+    depends_on:
+      - redis
+      - app
+    volumes:
+      - .:/app
+    command: sh -c ${DOCKER_KUE_COMMAND}

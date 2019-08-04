@@ -1,0 +1,9 @@
+FROM node:alpine
+
+WORKDIR /app
+
+RUN npm i -g nodemon
+
+COPY . /app
+
+RUN yarn install --ignore-engines --silent

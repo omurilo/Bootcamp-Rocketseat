@@ -11,7 +11,7 @@ Models Construct:
     - token
     - timestamp token_created_at
   - Token
-    - userId
+    - user_id
       - unsigned
       - references id
       - inTable users
@@ -31,7 +31,7 @@ Models Construct:
     - type
     - subtype
   - Project
-    - userId (relacionamento com users)
+    - user_id (relacionamento com users)
       - integer
       - unsigned
       - inTable users
@@ -43,16 +43,28 @@ Models Construct:
     - description
       -notNullable
   - Task
-    - userId
-      - ...Project (userId)
-    - projectId
-      - ...userId
+    - user_id
+      - ...Project (user_id)
+    - project_id
+      - ...user_id
       - inTable projects
       - onDelete cascade
     - title
       - notNullable
     - description
     - timestamp due_date
-    - fileId
-      - ...userId
+    - file_id
+      - ...user_id
         - inTable files
+  - UserAddress
+    - user_id
+      - ...Project (user_id)
+    - street
+      - notNullable
+    - number
+      - notNullable
+    - district
+    - city
+      - notNullable
+    - state
+      - notNullable

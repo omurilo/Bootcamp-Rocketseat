@@ -8,12 +8,10 @@ EXPOSE ${PORT}
 
 ADD package.json /app
 
-RUN npm install
+RUN npm i -g @adonisjs/cli
 
 COPY . /app
 
-RUN node --harmony_proxies ace migration:run
+RUN yarn install --ignore-engines --silent
 
-RUN node --harmony_proxies ace kue:listen
-
-CMD ["npm", "start"]
+CMD ["adonis", "serve"]

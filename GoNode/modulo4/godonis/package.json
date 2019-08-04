@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node ace test"
+    "test": "node ace test",
+    "dev-kue": "nodemon --watch app --watch bootstrap --watch config --watch resources --watch .env --watch libs -x \"node ace kue:listen\"",
+    "kue": "node ace kue:listen"
   },
   "keywords": [
     "adonisjs",
